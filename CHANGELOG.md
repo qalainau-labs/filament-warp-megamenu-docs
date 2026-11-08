@@ -2,7 +2,7 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
-## [Unreleased]
+## [1.0.0] - 2026-11-08
 
 ### Added
 

@@ -802,6 +802,11 @@ FilamentView::registerRenderHook(
 
 The interface is in English, Japanese, German, French, Spanish, Italian, Brazilian Portuguese, Korean and Chinese (simplified and traditional).
 
+### Tested on
+
+Before each release, the full test suite runs on PHP 8.3, 8.4 and 8.5 × Laravel 12 and 13 × SQLite, MySQL, MariaDB and PostgreSQL, with each database at its newest and its oldest supported version: 48 combinations in all. A version is released only when every combination passes.
+[See the results for each release](https://github.com/qalainau-labs/filament-warp-megamenu-docs/tree/main/test-runs).
+
 ## Support
 
 Questions before or after buying: [warpui.com/support](https://warpui.com/support?plugin=megamenu).
