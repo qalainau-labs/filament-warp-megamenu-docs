@@ -28,6 +28,8 @@ Open the Sales group, star a page, press <kbd>g</kbd> <kbd>m</kbd> and type *#10
   - [Favorites and recently opened](#favorites-and-recently-opened)
   - [Recommended and to do](#recommended-and-to-do)
 - [Opening and closing](#opening-and-closing)
+  - [Keys that open the panels](#keys-that-open-the-panels)
+  - [Opening from an action or your own button](#opening-from-an-action-or-your-own-button)
   - [Keyboard](#keyboard)
 - [Sidebar flyout](#sidebar-flyout)
 - [Phones](#phones)
@@ -57,6 +59,7 @@ Filament's top navigation opens each group as a short list. That is fine for fiv
 | A card for a new feature, a *View all* link, *+ New order* buttons | [`->card()`, `->viewAll()`, `->createButtons()`](#header-card-view-all-and-create-buttons) |
 | Quote → Order → Shipment → Invoice drawn as a flow | [`->flow()`](#bento-and-flow-layouts) |
 | One place to search every page (and every record), with favorites and recently opened pages | [The launcher](#the-launcher) |
+| A row action, a form action or your own button that opens a group's panel | [`->openMegaMenu()`](#opening-from-an-action-or-your-own-button) |
 | Type *#1042* and open that order | [`RecordLookup`](#opening-a-record-by-its-number) |
 | The same panels from the sidebar, even when it is collapsed to icons | [`->sidebarFlyout()`](#sidebar-flyout) |
 | A real menu on phones | [The drawer](#phones) |
@@ -422,6 +425,14 @@ FilamentWarpMegaMenuPlugin::make()
     ->shortcut('g m');                                           // or 'mod+k' (⌘K on a Mac, Ctrl+K elsewhere); false for none
 ```
 
+The button sits at the start of the bar, after the logo. To put it at the right end of the bar, just before the search box and the user menu:
+
+```php
+->launcherPosition('end')   // 'start' (default) or 'end'; a closure works too
+```
+
+Its panel then opens toward the left, under the button. This is for the top bar; with the sidebar flyout and no top bar, the button stays in the sidebar. To open the launcher from somewhere else — a page header, a widget — use [an action or your own button](#opening-from-an-action-or-your-own-button).
+
 ### Search
 
 The search box finds pages by name, description, keywords and group, ignoring upper and lower case, accents (*cafe* finds *Café*), full-width and half-width characters, and katakana and hiragana (*すとっく* finds *ストック*). Pages whose names start with the word come first. <kbd>↓</kbd> goes to the results, <kbd>Enter</kbd> opens the first one.
@@ -542,6 +553,51 @@ use Qalainau\FilamentWarpMegaMenu\Enums\Animation;
 ```
 
 When the groups do not fit in the bar, the last ones move into a *More* button. Turn it off with `->overflowMenu(false)`.
+
+### Opening from an action or your own button
+
+Any Filament action can open a group's panel: a table row action, a form action, a page header action.
+
+```php
+use Filament\Actions\Action;
+
+Action::make('salesPages')
+    ->label('Sales pages')
+    ->icon('heroicon-m-squares-2x2')
+    ->openMegaMenu('group:sales');   // nothing (or null) opens the launcher
+```
+
+The panel opens as if the person had clicked the group in the bar, with the focus on its first page, so <kbd>↓</kbd> and <kbd>Enter</kbd> work. The click on the action does not close it again. The action does not call Livewire and opens no modal.
+
+| `openMegaMenu(…)` | Opens |
+| --- | --- |
+| nothing or `null` | The launcher (the *Menu* panel), with the search box ready |
+| `'group:sales'` | The group with this key (the same keys as in `MegaMenuRenderHook` scopes and the editor's `?group=`) |
+| `'Sales'` | The same group: a name becomes `'group:'` and its slug |
+| `NavigationGroup::Sales` | The group made from this enum (its key is `'enum:App\Enums\NavigationGroup::Sales'`) |
+| `'menu:help'` | A [menu you made](#menus-you-make) that shows as a button in the bar |
+
+Where it opens:
+
+- under the group's button in the bar. A group that went into *More* opens from *More*;
+- beside the group in the sidebar, with [`->sidebarFlyout()`](#sidebar-flyout);
+- on screens narrower than 1024 px, the [drawer](#phones) opens, since the groups are in it.
+
+A group the person cannot see (no permission, or hidden for their role) opens nothing, and the browser console says which key was not found. When the launcher is turned off with `->launcher(false)`, opening it does nothing either.
+
+From your own HTML — a Blade view, a widget, a render hook — send the browser event `warp-megamenu-open` with the same values:
+
+```blade
+<button type="button" x-data x-on:click="$dispatch('warp-megamenu-open', { group: 'group:sales' })">
+    Sales pages
+</button>
+```
+
+```js
+window.dispatchEvent(new CustomEvent('warp-megamenu-open', { detail: { group: 'group:sales' } }))   // detail: {} opens the launcher
+```
+
+Here the key must be written out (`'group:sales'`, `'enum:…'`, `'menu:help'`) or be the group's name exactly as it shows. The event works on panel pages with the menu; the components for public pages (`<x-warp-megamenu::menu>`) do not listen to it.
 
 ### Keyboard
 
@@ -774,6 +830,7 @@ FilamentView::registerRenderHook(
 | `shortcut('g m')` | `g m` | `false` for none |
 | `groupShortcuts()` | on | `g 1`–`g 9` open the groups ([Keys that open the panels](#keys-that-open-the-panels)) |
 | `launcher(true, 'Menu')`, `launcherCard()` | on | [The launcher](#the-launcher) |
+| `launcherPosition('end')` | `start` | The launcher button at the right end of the bar ([The launcher](#the-launcher)) |
 | `search()`, `globalSearch()`, `notFoundLinks()` | on | [Search](#search) |
 | `recordLookups([...])` | | [Opening a record by its number](#opening-a-record-by-its-number) |
 | `favorites()`, `recentPages(6)`, `recentRecords(6)`, `recordVisits()` | on | [Favorites and recently opened](#favorites-and-recently-opened) |

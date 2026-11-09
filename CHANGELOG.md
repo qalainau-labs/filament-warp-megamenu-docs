@@ -2,6 +2,14 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [1.1.0] - 2026-11-09
+
+### Added
+
+- **Open a panel from an action:** `->openMegaMenu('group:sales')` on any Filament action — a table row action, a form action, a page header action — opens that group's panel as if the group were clicked in the bar (from *More*, beside the sidebar group, or in the drawer on phones). Without a group it opens the launcher. It takes a group key, a group name, a navigation group enum or `'menu:…'`.
+- **Open from your own button:** the browser event `warp-megamenu-open` (`$dispatch('warp-megamenu-open', { group: 'group:sales' })`) does the same from any Blade view, widget or render hook.
+- **The launcher at the right end of the bar:** `->launcherPosition('end')` puts the *Menu* button at the right end of the bar, before the search box and the user menu; its panel opens toward the left.
+
 ## [1.0.0] - 2026-11-08
 
 ### Added
