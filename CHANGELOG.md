@@ -2,6 +2,12 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [1.1.1] - 2026-11-09
+
+### Changed
+
+- **“More below” on long panels:** a panel taller than the screen (often the launcher) now shows a small *More below* label and a light shadow at its bottom edge while there is more to scroll to, so the pages below the edge are not missed where scrollbars stay hidden (macOS with a trackpad, touch screens). Clicking the label scrolls the panel down without moving the focus out of the search box; the label goes away at the end of the list. The label is translated into the 10 languages of the plugin.
+
 ## [1.1.0] - 2026-11-09
 
 ### Added
