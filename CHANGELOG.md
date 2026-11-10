@@ -2,6 +2,22 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [Unreleased]
+
+## [1.2.0] - 2026-11-10
+
+### Security
+
+- **Icon colour of links in made menus:** the icon colour saved with a link of a menu made in the editor is now used only when it is a colour name (`success`, `info`, …). Before, a value sent by changing the editor's request by hand was written into the `style` attribute of the link, so someone who may edit menus could change how the bar looks for everyone.
+
+### Fixed
+
+- **Groups named in Japanese, Chinese, Korean and other scripts:** `Str::slug()` turned such names into an empty string, so every group got the key `group:` (the bucket for pages without a group): the groups were merged into one panel, with the last group's name and description. Names that slug to nothing now get a key made from the name itself (`group:u-…`). Keys of names written in Latin letters do not change, so menus saved in the editor keep working.
+
+### Changed
+
+- **Tenant index on the layout history:** a new migration (`update_warp_megamenu_layout_versions_add_tenant_index`) indexes `warp_megamenu_layout_versions` by `tenant_type`, `tenant_id`, `panel`, `audience` and `publish_at`. The history is read per tenant, so in an app with many tenants the history and the scheduled changes no longer scan the other tenants' rows. Run `php artisan migrate` (it runs by itself when the migrations are not published; published apps publish again with `--tag=filament-warp-megamenu-migrations`).
+
 ## [1.1.1] - 2026-11-09
 
 ### Changed
