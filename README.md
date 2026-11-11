@@ -697,7 +697,7 @@ Every save keeps a version. *History* lists them — when, by whom, which one is
 ->editorLocales(['en' => 'English', 'ja' => '日本語'])
 ```
 
-The editor gets a *Names in* list. Choose a language and type the names and descriptions of pages and groups in it; the original stays as the placeholder. People see the names of their language (`app()->getLocale()`), and the original where none was typed.
+The editor gets a *Names in* list. Choose a language and type the names and descriptions of pages and groups in it; the original stays as the placeholder, and under the field once you have typed. People see the names of their language (`app()->getLocale()`), and the original where none was typed.
 
 The list works for [menus you make](#menus-you-make) too, so one menu can serve a site in several languages. There you can type, per language, every text people read: the menu's name (the phone button and screen readers), the names and descriptions of groups and links, column headings, tags, the card's title, text and button, the link at the top right and the buttons under the panel. The preview and the group tabs switch to the language you chose. Addresses, icons, colours and layout are shared by all languages. A public page shows the texts of `app()->getLocale()`, so set the locale before the view renders (for example in a middleware that reads the visitor's choice):
 

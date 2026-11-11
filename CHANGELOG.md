@@ -4,6 +4,17 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-11
+
+### Changed
+
+- **The original text under each field while typing another language:** with a language chosen in *Names in*, every field you can type per language now shows its original text under it (*Original: Paper cups*). Before, the original showed only as the placeholder, so it disappeared as soon as the field held a translation — in the panel menu and in menus you make.
+- **No tour bubbles on the menu editor:** with `->onboarding()`, the three bubbles for people opening the menu for the first time no longer start on the *Edit the menu* page, where they covered the heading and the explanations. They still start on every other page.
+
+### Fixed
+
+- **Line breaks in Japanese and Chinese:** panels, the launcher and the menus on public pages now use `line-break: strict`, so a line no longer starts with ー, a small kana or a closing punctuation mark (a card read 「メニュ／ーも」).
+
 ## [1.3.0] - 2026-11-11
 
 ### Added
