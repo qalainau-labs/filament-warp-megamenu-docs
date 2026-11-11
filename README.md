@@ -699,6 +699,15 @@ Every save keeps a version. *History* lists them — when, by whom, which one is
 
 The editor gets a *Names in* list. Choose a language and type the names and descriptions of pages and groups in it; the original stays as the placeholder. People see the names of their language (`app()->getLocale()`), and the original where none was typed.
 
+The list works for [menus you make](#menus-you-make) too, so one menu can serve a site in several languages. There you can type, per language, every text people read: the menu's name (the phone button and screen readers), the names and descriptions of groups and links, column headings, tags, the card's title, text and button, the link at the top right and the buttons under the panel. The preview and the group tabs switch to the language you chose. Addresses, icons, colours and layout are shared by all languages. A public page shows the texts of `app()->getLocale()`, so set the locale before the view renders (for example in a middleware that reads the visitor's choice):
+
+```blade
+{{-- English visitors see "Products", Japanese visitors see "製品" --}}
+<x-warp-megamenu::menu name="site" />
+```
+
+Texts typed per language are saved with the menu (in its `structure`, under `translations`) and travel with *Export / import*. Removing a link removes its texts in every language; empty fields are not saved.
+
 ## Menus you make
 
 The menu built from your navigation is one menu. In *Edit the menu* you can also make **any number of other menus** — *New menu* at the top of the editor. A menu you make has groups (added from the same templates), columns, links and cards, all edited on the live panel like above. A link goes to a web address or to a page of the panel (shown only to people who may open that page). Under the menu, *Pages of this panel* lists every page you may open: drag one into a column, or click it to add it at the end of the first column.
@@ -759,6 +768,7 @@ Put a menu in the header of any page of the same Laravel app — a page without 
 - On screens narrower than 1024 px, the header shows one menu button that opens a full-screen menu with each group to open and close.
 - The keyboard works the same as in the panel (arrows, <kbd>Esc</kbd>), and the link of the current page is marked with `aria-current="page"`.
 - Favorites and recently opened pages are panel features; public menus do not have them.
+- For a site in several languages, type the texts of each language in the editor ([Names in other languages](#names-in-other-languages)): the same `<x-warp-megamenu::menu name="site" />` shows the language of `app()->getLocale()`.
 - Menus are looked up by name. On public pages only menus without a tenant are used, so a menu one tenant made never shows on another tenant's page or on your own site. In apps with tenancy, pass the tenant whose menu to show: `<x-warp-megamenu::menu name="site" :tenant="$team" />` (a model, or the key from `tenantKeyUsing()`); the same for `button` and `footer`.
 - For search engines, `menu` also writes its links as schema.org `SiteNavigationElement`s (JSON-LD). Turn it off with `:structured-data="false"`.
 

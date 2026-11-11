@@ -4,6 +4,16 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-11
+
+### Added
+
+- **Menus you make in several languages:** with `->editorLocales([...])`, the *Names in* list now also shows when you edit a menu you made. Choose a language and type its texts — the menu's name, the names and descriptions of groups and links, column headings, tags, the card, the link at the top right and the buttons under the panel; the original text shows as the placeholder and the preview and group tabs switch to that language. `<x-warp-megamenu::menu>`, `button` and `footer` and the button in the panel bar show the texts of `app()->getLocale()`, and the original text where none was typed, so one menu can serve a site in several languages. The texts are saved with the menu and travel with *Export / import*; removing a link removes its texts too. Before, a menu you made had its texts in one language only.
+
+### Fixed
+
+- **Links to a part of a page in made menus:** a link with `#` (`/#reviews`, `/pricing#teams`) was marked as the current page (`aria-current="page"`, the accent colour on the link and its group) whenever the page around it was open, so on a home page with several such links every one of them and their groups looked current. A link with `#` is now never the current page; links without one work as before.
+
 ## [1.2.0] - 2026-11-10
 
 ### Security
