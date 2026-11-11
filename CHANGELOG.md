@@ -2,7 +2,18 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
-## [Unreleased]
+## [1.3.2] - 2026-11-12
+
+### Security
+
+- Now requires Filament 5.11 or later (was 5.0). Older versions do not have Filament's `#[Unexposed]` attribute, which the plugin uses to keep internal methods of the menu and the menu editor (such as importing a menu file) from being called directly from the browser. The tests now also run on the lowest supported versions before each release.
+
+### Fixed
+
+- A page whose navigation label is empty was not added to *Recently opened* (an error was reported in the log each time it was opened). It is now listed under a name made from its class.
+- **No more “Nothing found” while records are still being searched:** typing `#1042` showed *Nothing found for “#1042”* for a moment, then the order once the answer arrived — people pressing Enter right away thought the number did not work. While the search waits for you to stop typing and for the answer, it now shows *Searching records…* instead, and pressing Enter during that moment opens the first result once the answer arrives (before, Enter did nothing, or opened the first link under *Nothing found*).
+- **The kind of record under a number starts with a capital letter:** in a panel that keeps model labels in lower case (`$hasTitleCaseModelLabel = false`), the line under a record opened by its number read *order*; it now reads *Order*.
+- **Translations:** German — the editor's button that goes back to previewing the menu as yourself now reads *Zurück zu meiner Ansicht* (was *Als ich ansehen*). Brazilian Portuguese — the search is called *pesquisa* everywhere (it was *busca* in some places).
 
 ## [1.3.1] - 2026-11-11
 

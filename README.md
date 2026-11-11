@@ -864,7 +864,7 @@ FilamentView::registerRenderHook(
 
 - PHP 8.3+
 - Laravel 12 or 13
-- Filament 5
+- Filament 5.11 or later
 - SQLite, MySQL 8.0+, MariaDB 10.11+ or PostgreSQL 14+
 
 The interface is in English, Japanese, German, French, Spanish, Italian, Brazilian Portuguese, Korean and Chinese (simplified and traditional).
