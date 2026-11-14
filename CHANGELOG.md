@@ -2,6 +2,14 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [1.3.3] - 2026-11-14
+
+### Fixed
+
+- Accessibility: the first-visit tour bubble now has a name for screen readers (the text of the current step).
+- Accessibility: grey text in dark mode (panel and section descriptions, section headings, the keyboard hints, search messages, chart labels, and the hints of the menu editor) is now light enough to read (4.5:1). The selected group tab of the menu editor in dark mode, and the pages already in the group, are readable too; the pages already in the group are shown with a dashed border and lighter text instead of being made transparent.
+- The "+" next to a link in the preview of the menu editor is no longer an empty link for screen readers.
+
 ## [1.3.2] - 2026-11-12
 
 ### Security
