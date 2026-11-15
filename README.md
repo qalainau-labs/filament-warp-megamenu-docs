@@ -482,6 +482,8 @@ The launcher also lists the pages and the records (from a resource's view and ed
 ->recordVisits(false)     // do not record anything (also turns off the "new" dots)
 ```
 
+Recent records are checked each time they are shown: a record the person can no longer open — the policy's `view`/`update` now says no, the record was deleted, or the page is closed to them — is left out, name and all.
+
 ### Recommended and to do
 
 ```php
@@ -512,6 +514,20 @@ It can also be turned on and off in the editor (the *Menu* tab).
 ### My links
 
 Each person can add their own links — the bank, a carrier's tracking page — under *My links* in the launcher, and remove them again. Only `https://`, `http://`, `mailto:`, `tel:` and `/` addresses are kept, up to 20 per person, per panel and tenant.
+
+A link to a page of your panel is shown only while the person may open that page (the same check Filament makes: `canAccess()`, and for a record `canView()`/`canEdit()`). This applies to the links in a made menu and the external links of the editor too. Links to other sites are always shown.
+
+### Restricting the menu's own pages per role
+
+```php
+FilamentWarpMegaMenuPlugin::make()
+    ->canAccessUsing(fn (User $user, string $page): bool => $user->canOpenScreen($page))
+    ->canWriteUsing(fn (User $user, string $page): bool => ! $user->isReadOnlyOn($page))
+```
+
+`$page` is `Pages\EditMegaMenu` (the menu editor) or `Pages\MenuSitemap` (*All pages*), in `Qalainau\FilamentWarpMegaMenu`. Someone who gets `false` from `canAccessUsing()` doesn't get the page's link, gets a 403 at its URL, and Livewire calls from an open page are refused. The editor is only for changing the menu, so `canWriteUsing()` returning `false` closes it too. These rules only narrow `editable()` and `sitemap()`; without them nothing changes.
+
+Pages of other Warp plugins have the same `canAccessUsing()`/`canWriteUsing()`, and the menu hides their items as soon as they are closed.
 
 ### A tour for new people
 

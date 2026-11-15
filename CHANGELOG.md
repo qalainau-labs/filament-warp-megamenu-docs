@@ -2,6 +2,18 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [1.4.0] - 2026-11-15
+
+### Added
+
+- `canAccessUsing()` and `canWriteUsing()` decide per page who can open the menu editor and *All pages* (for your app's own roles).
+
+### Fixed
+
+- Accessibility: the row of group tabs in the menu editor is now a group of toggle buttons (`aria-pressed`), because it also holds the buttons that move a group and add one. As a tab list it was not valid for screen readers.
+- Recent records no longer show records the person can no longer open (the policy says no, the record was deleted, or the page is closed); the list fills up with older ones instead.
+- *My links*, links in made menus and the editor's external links that point to a page of the panel are hidden while the person may not open that page.
+
 ## [1.3.3] - 2026-11-14
 
 ### Fixed
