@@ -2,6 +2,12 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [1.4.1] - 2026-11-16
+
+### Fixed
+
+- **Static analysis**: Larastan no longer reports “Call to an undefined method” for `Action::openMegaMenu()`. The plugin ships `extension.neon`, a PHPStan extension that reads Filament's macros (loaded automatically with `phpstan/extension-installer`; otherwise add it to `includes`). See “Static analysis” in the README.
+
 ## [1.4.0] - 2026-11-15
 
 ### Added

@@ -890,6 +890,19 @@ The interface is in English, Japanese, German, French, Spanish, Italian, Brazili
 Before each release, the full test suite runs on PHP 8.3, 8.4 and 8.5 × Laravel 12 and 13 × SQLite, MySQL, MariaDB and PostgreSQL, with each database at its newest and its oldest supported version: 48 combinations in all. A version is released only when every combination passes.
 [See the results for each release](https://github.com/qalainau-labs/filament-warp-megamenu-docs/tree/main/test-runs).
 
+## Static analysis (PHPStan / Larastan)
+The methods this plugin adds to Filament's components with `macro()` (`Action::openMegaMenu()`) are not declared on the classes, so Larastan reports “Call to an undefined method” for them. The plugin ships a PHPStan extension that tells PHPStan about them, with their real parameters and return types:
+
+- With [`phpstan/extension-installer`](https://github.com/phpstan/extension-installer), there is nothing to do.
+- Without it, add the file to your `phpstan.neon`:
+
+```neon
+includes:
+    - vendor/qalainau/filament-warp-megamenu/extension.neon
+```
+
+The extension reads the macros that are registered when Larastan boots your app, so it needs [Larastan](https://github.com/larastan/larastan) (plain PHPStan does not boot the app). It also covers the macros your own app adds to Filament components.
+
 ## Support
 
 Questions before or after buying: [warpui.com/support](https://warpui.com/support?plugin=megamenu).
