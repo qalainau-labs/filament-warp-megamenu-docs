@@ -2,6 +2,12 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [1.4.2] - 2026-11-19
+
+### Fixed
+
+- With the top navigation, the browser no longer reports “ResizeObserver loop completed with undelivered notifications.” when the page opens or the window is resized, whenever some groups go into **More**. Error trackers (Sentry, Bugsnag) and session replays no longer count it as an error on every page.
+
 ## [1.4.1] - 2026-11-16
 
 ### Fixed
