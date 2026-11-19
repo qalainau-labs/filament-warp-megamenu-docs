@@ -2,6 +2,14 @@
 
 All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
+## [Unreleased]
+
+## [1.4.3] - 2026-11-20
+
+### Fixed
+
+- **Console error `warpMegaMenu is not defined`**: on pages where Livewire re-renders the component inside another Alpine component, the browser console could show `warpMegaMenu is not defined` before the component's script had arrived. Empty components are now registered up front, and the real ones replace them as soon as they load. No visible change.
+
 ## [1.4.2] - 2026-11-19
 
 ### Fixed
