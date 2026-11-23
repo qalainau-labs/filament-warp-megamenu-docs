@@ -4,6 +4,13 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.4.4] - 2026-11-23
+
+### Fixed
+
+- **The "new" dot follows the panel's time zone**: the last day of `new()` ended at midnight UTC, so with the panel set to e.g. America/New_York the dot disappeared during the evening of its last day. The last day now ends at the end of that day in the panel's time zone, and the editor's "30 days from today" button counts from the panel's today.
+- **Duplicate item for a page other than a resource's index**: an item written with `MegaItem::resource($resource, 'page')` or `MegaItem::page()` that opens the same URL as a Filament navigation item (a resource's extra page, a custom navigation item) now merges into that navigation item, instead of showing the same page twice.
+
 ## [1.4.3] - 2026-11-20
 
 ### Fixed

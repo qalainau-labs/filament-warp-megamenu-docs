@@ -180,6 +180,8 @@ $panel->topNavigation()->plugin(\App\Filament\Menu::plugin());
 
 Every resource and page you did not mention is still in the menu, in the group Filament puts it in.
 
+To point at a page of a resource other than its list, give the page name: `MegaItem::resource(PriceListResource::class, 'archive')->description('Price lists no longer in use')`. If the Filament navigation already has an item that opens the same URL (a `getNavigationItems()` entry, a `NavigationItem` you added), the two are merged into one item; the menu does not show the page twice. The same goes for `MegaItem::page()`. Without a Filament navigation item for that URL, the item you wrote is added on its own.
+
 ## Groups
 
 `MegaGroup::make()` takes the same value you give `$navigationGroup` on your resources and pages — a string, or a case of your navigation group enum. It adds to that group; a name that Filament does not have creates a new group.
