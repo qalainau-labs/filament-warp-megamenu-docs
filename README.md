@@ -41,6 +41,11 @@ Open the Sales group, star a page, press <kbd>g</kbd> <kbd>m</kbd> and type *#10
   - [On the public pages of your app](#on-the-public-pages-of-your-app)
 - [All pages](#all-pages)
 - [Tenancy and several panels](#tenancy-and-several-panels)
+- [Favorites bar](#favorites-bar)
+- [Section tabs](#section-tabs)
+- [Panel switcher](#panel-switcher)
+- [Visual presets](#visual-presets)
+- [Announcements](#announcements)
 - [Changing the look](#changing-the-look)
 - [Plugin methods](#plugin-methods)
 - [Requirements](#requirements)
@@ -821,6 +826,77 @@ If you add tenancy to an app that already has favorites and edited menus, attach
 ```bash
 php artisan warp:assign-tenant "App\Models\Team" 1 --dry-run
 ```
+
+## Favorites bar
+
+Put starred pages within one click in the topbar:
+
+```php
+FilamentWarpMegaMenuPlugin::make()->favoritesBar(limit: 8)
+```
+
+`favoritesBar(bool|Closure $condition = true, int $limit = 8)` follows the same star ordering as the launcher, including changes without a reload. Only visible, accessible, unlocked pages in the current panel and tenant are shown, up to the limit. Hover or focus an icon for its name; the current page is marked. With no stars, `favorites(false)`, or a zero limit, the bar stays hidden. This feature is only for the topbar, not sidebar placement or the mobile drawer. It is opt-in; without the call the default output and assets stay unchanged.
+
+## Section tabs
+
+Use vertical tabs when a group has several sections:
+
+```php
+MegaGroup::make('Sales')->tabs()->sections([
+    MegaSection::make('Selling')->items([OrderResource::class]),
+    MegaSection::make('Billing')->items([InvoiceResource::class]),
+])
+```
+
+`tabs(bool|Closure $condition = true)` applies only to column mega panels with at least two sections. Bento, flow, plain dropdowns and single-section groups keep their normal layout. Hover, click or focus selects a section; Up/Down moves between tabs and Right focuses the first item. Sections without a heading use “More”. The editor gets no new layout option. Tabs are opt-in and leave the default output unchanged.
+
+## Panel switcher
+
+Let people move to other panels they can access:
+
+```php
+FilamentWarpMegaMenuPlugin::make()->panelSwitcher(
+    panels: ['admin', 'team'],
+    labels: ['team' => 'Team workspace'],
+    icons: ['team' => 'heroicon-o-user-group'],
+)
+```
+
+`panelSwitcher(bool|Closure $condition = true, ?array $panels = null, array $labels = [], array $icons = [])` accepts panel IDs in display order (`null` means all registered panels). Labels and icons are keyed by ID; labels default to the panel brand name. When a panel has no brand name, or several panels share one (every panel still using `config('app.name')`, for example), the label is made from the ID instead (`customer-portal` → Customer Portal). It appears in the topbar and at the start of the mobile drawer only when there is another destination. The current panel is marked “You are here” and cannot be clicked. Other panels require a `FilamentUser` whose `canAccessPanel()` returns true. Tenant panels also require an accessible tenant and link to the user's default tenant, falling back to the first accessible tenant. Users without `FilamentUser` get no other panels. The switcher is opt-in and does not change existing navigation when disabled.
+
+## Visual presets
+
+Choose one optional visual treatment without adding an editor option:
+
+```php
+use Qalainau\FilamentWarpMegaMenu\Enums\Preset;
+
+FilamentWarpMegaMenuPlugin::make()->preset(Preset::Soft)
+// ->preset('outline') or ->preset(Preset::Contrast)
+```
+
+`preset(Preset|string|null|Closure $preset)` accepts Soft (rounded panels and gentle backgrounds), Outline (fine borders without shadows), or Contrast (strong text and primary hover backgrounds). All support light and dark mode with Filament color variables. `null`, the default, adds no class or stylesheet. The separate extras stylesheet is requested once only when an added feature needs it; the existing distributed CSS and JavaScript are unchanged.
+
+## Announcements
+
+Show up to five recent updates in the launcher and mobile drawer:
+
+```php
+use Qalainau\FilamentWarpMegaMenu\Menu\Announcement;
+
+FilamentWarpMegaMenuPlugin::make()->announcements(fn (): array => [
+    Announcement::make('New reports')
+        ->description('Explore your latest sales figures.')
+        ->date('2026-11-20 09:00')
+        ->url('/admin/reports', newTab: false)
+        ->icon('heroicon-o-megaphone')
+        ->visible(fn (): bool => auth()->user()->can('viewReports')),
+])
+```
+
+`announcements(array|Closure $announcements)` is opt-in. `Announcement::make(string $title)` accepts `description(?string)`, `date(DateTimeInterface|string)`, `url(?string, bool $newTab = false)`, `icon(?string)` and `visible(bool|Closure)`. `key()` returns a stable title/date key; `key('release-42')` overrides it. Dates without an explicit timezone are interpreted in the panel timezone; dates are displayed there too. Updates appear newest first, with a remaining count after five. The app controls permissions through `visible()`; hidden updates never appear or affect the unread dot.
+
+Run `php artisan migrate` to create `warp_megamenu_announcement_reads`. The launcher shows an unread indicator when an update is newer than the last viewing time. Opening the updates marks them read through a renderless Livewire call. Read state is isolated by user, panel and tenant, including `tenantKeyUsing()`. If the table is absent, updates still display, with no unread indicator or read writes. Without `announcements()` there are no announcement queries or extra Livewire calls. Announcement dates are publication dates, not scheduling rules; use `visible()` if you need scheduled publication.
 
 ## Changing the look
 

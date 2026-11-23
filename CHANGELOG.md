@@ -4,6 +4,18 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-23
+
+### Added
+
+All five are opt-in: a Mega Menu that does not call them renders the same HTML, runs the same queries and loads the same CSS and JS as 1.4.4.
+
+- **Favorites bar** (`favoritesBar()`): the pages a person starred, as icons in the top bar, one click away without opening the launcher. Starring, unstarring and reordering in the launcher update the bar without a reload. Pages the person cannot see are never shown.
+- **Section tabs** (`MegaGroup::tabs()`): a column group with several sections shows them as tabs on the left and the chosen section on the right — for groups with many pages. Keyboard: ↑ ↓ between tabs, → into the section.
+- **Panel switcher** (`panelSwitcher()`): one button in the top bar (and at the top of the mobile drawer) to move between your Filament panels. Only panels the person can access are listed, and a panel with tenancy opens in a tenant the person belongs to.
+- **Visual presets** (`preset()`, `Preset::Soft`, `Preset::Outline`, `Preset::Contrast`): a finished look for the bar and panels in one line, in light and dark mode.
+- **Announcements** (`announcements()`, `Announcement`): a "What's new" list in the launcher and a dot on the Menu button until the person opens it. Dates follow the panel's time zone, and read state is kept per person, panel and tenant. Run `php artisan migrate` to add the `warp_megamenu_announcement_reads` table (nothing else uses it).
+
 ## [1.4.4] - 2026-11-23
 
 ### Fixed
