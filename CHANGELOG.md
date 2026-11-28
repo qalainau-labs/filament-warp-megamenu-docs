@@ -4,6 +4,14 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.5.2] - 2026-11-28
+
+### Fixed
+
+- **Saving “Choose groups” on a busy server could look done when it was not shown**: when Livewire ended the call without its answer, the menu closed with no message and the bar kept the old groups, although the server had saved them. A yellow message now says the change could not be confirmed, and the menu is reloaded so it shows what was saved. The save is not sent twice.
+- **Adding one of your own links on a busy server could say the address was wrong**: with no answer, the form stayed open with “Type a name and an address…” although the link had been added, so adding it again made a copy (and a cancelled call left an error in the browser console). The same yellow message now shows, the form closes and the menu is reloaded. A star that could not be confirmed after reading the stars again shows the message too.
+- **× on your own links removes the link you clicked**: on a list that was not redrawn after a missing answer, × could remove the link that had moved into that place. It now removes the link with that address, or nothing if it is already gone.
+
 ## [1.5.1] - 2026-11-28
 
 ### Fixed
