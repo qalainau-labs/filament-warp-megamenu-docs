@@ -4,6 +4,12 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.5.3] - 2026-11-28
+
+### Fixed
+
+- **Text is easier to read when the panel color is a light one (Amber, Yellow…)**: the “Next” button of the first-visit tour has a darker background (white text was 2.1:1 on Amber), and the selected tab in the menu editor uses a darker text color (2.9:1 on Amber). Both now read at 4.5:1 or more with every Filament color. The dark theme is unchanged, and so is how the menu looks with the default color (only these two spots are a shade darker).
+
 ## [1.5.2] - 2026-11-28
 
 ### Fixed
