@@ -4,6 +4,13 @@ All notable changes to `qalainau/filament-warp-megamenu` are documented here.
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-11-28
+
+### Fixed
+
+- **The menu no longer stops when the server is slow to answer a star or the to-do list**: on a busy server Livewire sometimes ends a call without its answer. Starring or unstarring a page then broke the menu ("Cannot read properties of undefined (reading 'includes')"), and the launcher's to-do list broke the same way. The star is not sent twice (it would undo itself); the menu reads the starred pages again so it matches what was saved. The to-do list, counts, charts and search are asked once more, and the to-do list keeps what it showed if there is still no answer.
+- Saving the shown groups no longer leaves an error in the browser console when the call is cancelled.
+
 ## [1.5.0] - 2026-11-23
 
 ### Added
